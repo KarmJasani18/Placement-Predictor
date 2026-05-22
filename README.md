@@ -228,7 +228,7 @@ Placement-Predictor/
 Clone the repository:
 
 ```bash
-git clone <your-repository-link>
+git clone <https://github.com/KarmJasani18/Placement-Predictor>
 ```
 
 Install dependencies:
