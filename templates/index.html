@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlaceAI — Student Placement Predictor</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+
+  <!-- ── Animated background canvas ─────────────────────────────────────────── -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ── Navbar ─────────────────────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#">
+        <span class="brand-icon"><i class="fa-solid fa-brain"></i></span>
+        <span class="brand-text">Place<span class="accent">AI</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#predictor">Predictor</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#history">History</a></li>
+      </ul>
+      
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#predictor" onclick="closeMobileMenu()">Predictor</a>
+      <a href="#features" onclick="closeMobileMenu()">Features</a>
+      <a href="#history" onclick="closeMobileMenu()">History</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span> AI-Powered Prediction Engine
+      </div>
+      <h1 class="hero-title">
+        Know Your Placement Probability<br />
+        <span class="gradient-text typed-target"></span>
+      </h1>
+      <p class="hero-sub">
+        Leverage logistic regression trained on real placement data. Enter your
+        IQ score and CGPA — get an instant, data-driven placement outlook with
+        confidence metrics.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#predictor">
+          <i class="fa-solid fa-rocket"></i> Start Predicting
+        </a>
+        <button class="btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+          Learn More <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">79%</span><span class="stat-lbl">Accuracy</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">2</span><span class="stat-lbl">Parameters</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">&lt;1s</span><span class="stat-lbl">Response</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring ring-1"></div>
+      <div class="orbit-ring ring-2"></div>
+      <div class="orbit-ring ring-3"></div>
+      <div class="hero-sphere">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="orbit-dot dot-a"><i class="fa-solid fa-chart-line"></i></div>
+      <div class="orbit-dot dot-b"><i class="fa-solid fa-brain"></i></div>
+      <div class="orbit-dot dot-c"><i class="fa-solid fa-trophy"></i></div>
+    </div>
+  </section>
+
+  <!-- ── Feature Cards ──────────────────────────────────────────────────────── -->
+  <section class="features" id="features">
+    <div class="section-header">
+      <span class="section-tag">How It Works</span>
+      <h2 class="section-title">AI-driven insights in three steps</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" style="--delay:0s">
+        <div class="feature-icon"><i class="fa-solid fa-input-numeric"></i></div>
+        <h3>Enter Your Profile</h3>
+        <p>Input your IQ score (50–160) and CGPA (0–10) to feed the prediction model.</p>
+        <div class="feature-tag">Step 1</div>
+      </div>
+      <div class="feature-card" style="--delay:.12s">
+        <div class="feature-icon"><i class="fa-solid fa-microchip-ai"></i></div>
+        <h3>Model Inference</h3>
+        <p>A trained Logistic Regression model analyses your data against placement patterns.</p>
+        <div class="feature-tag">Step 2</div>
+      </div>
+      <div class="feature-card" style="--delay:.24s">
+        <div class="feature-icon"><i class="fa-solid fa-chart-pie"></i></div>
+        <h3>Instant Results</h3>
+        <p>Receive a Placed / Not Placed verdict plus a confidence percentage breakdown.</p>
+        <div class="feature-tag">Step 3</div>
+      </div>
+      <div class="feature-card" style="--delay:.36s">
+        <div class="feature-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <h3>Track History</h3>
+        <p>Every prediction is stored locally — compare profiles and track improvements.</p>
+        <div class="feature-tag">Bonus</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Predictor ──────────────────────────────────────────────────────────── -->
+  <section class="predictor-section" id="predictor"></section>
+  <form id="prediction-form">
+
+    <div class="predictor-layout">
+
+      <!-- Form card -->
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Input Parameters</span>
+        </div>
+
+        <div class="form-group">
+          <label for="iq-input">
+            IQ Score
+            <span class="label-hint">Typical range: 70 – 140</span>
+          </label>
+
+          <div class="input-wrap">
+            <i class="fa-solid fa-brain input-icon"></i>
+
+            <input type="number" id="iq-input" name="iq"
+value="{{ iq if iq else '' }}" placeholder="e.g. 110" min="50" max="160" step="1" required />
+
+            <div class="input-bar"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cgpa-input">
+            CGPA
+            <span class="label-hint">Out of 10.0</span>
+          </label>
+
+          <div class="input-wrap">
+            <i class="fa-solid fa-star-half-stroke input-icon"></i>
+
+            <input type="number" id="cgpa-input" name="cgpa"
+value="{{ cgpa if cgpa else '' }}" placeholder="e.g. 8.2" min="0" max="10" step="0.01"
+              required />
+
+            <div class="input-bar"></div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+
+          <button class="btn-predict" type="submit">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            Predict Placement
+          </button>
+
+          <button class="btn-reset" type="reset">
+            <i class="fa-solid fa-rotate-left"></i>
+            Reset
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Result card -->
+      <div class="glass-card result-card" id="result-section">
+
+    <div class="result-placeholder" id="result-placeholder">
+        <div class="placeholder-icon">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+
+        <p>Your prediction will appear here</p>
+    </div>
+
+    <div class="result-content" id="result-content" style="display:none;">
+
+        <h2 id="result-text" style="font-size:2rem; margin-bottom:20px;">
+            Result
+        </h2>
+
+        <p style="font-size:1.2rem;">
+            Probability:
+            <strong id="confidence-text">0%</strong>
+        </p>
+
+    </div>
+
+</div>
+
+  <!-- ── Prediction History ──────────────────────────────────────────────────── -->
+  <section class="history-section" id="history">
+    <div class="section-header">
+      <span class="section-tag">Session Log</span>
+      <h2 class="section-title">Prediction history</h2>
+    </div>
+    <div class="history-toolbar">
+      <span class="history-count" id="history-count">Prediction History</span>
+      <button class="btn-clear" onclick="clearHistory()"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+    </div>
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>IQ</th>
+            <th>CGPA</th>
+            <th>Result</th>
+            <th>Confidence</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="history-body">
+          <tr class="empty-row" id="empty-row">
+            <td colspan="6">
+              <i class="fa-solid fa-inbox"></i>
+              <p>No predictions yet — run your first analysis above!</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon"><i class="fa-solid fa-brain"></i></span>
+        <span>Place<span class="accent">AI</span></span>
+      </div>
+      <p class="footer-copy">
+        Built with <i class="fa-solid fa-heart" style="color:#f87171"></i> using
+        Flask &amp; scikit-learn &mdash; for educational purposes only.
+      </p>
+      <div class="footer-links">
+        <a href="#predictor">Predictor</a>
+        <a href="#features">Features</a>
+        <a href="#history">History</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+
+document.getElementById("prediction-form").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const iq = document.getElementById("iq-input").value;
+    const cgpa = document.getElementById("cgpa-input").value;
+
+    const response = await fetch("/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            iq: iq,
+            cgpa: cgpa
+        })
+    });
+
+    const data = await response.json();
+
+    document.querySelector(".result-placeholder").style.display = "none";
+
+    document.querySelector(".result-content").style.display = "block";
+
+    document.getElementById("result-text").innerText = data.result;
+
+    document.getElementById("confidence-text").innerText =
+        data.confidence + "%";
+
+    savePrediction(
+        data.iq,
+        data.cgpa,
+        data.result,
+        data.confidence
+    );
+
+});
+
+</script>
+</body>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</html>
