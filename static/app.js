@@ -23,7 +23,7 @@ function savePrediction(iq, cgpa, result, confidence) {
         time: new Date().toLocaleTimeString()
     });
 
-    document.getElementById("empty-row").style.display = "none";
+    // document.getElementById("empty-row").style.display = "none";
     localStorage.setItem("predictionHistory", JSON.stringify(history));
 
     renderHistory();
@@ -68,7 +68,7 @@ function renderHistory() {
 function clearHistory() {
     localStorage.removeItem("predictionHistory");
     renderHistory();
-    document.getElementById("empty-row").style.display = "table-row";
+    // document.getElementById("empty-row").style.display = "table-row";
 }
 
 // Auto-render history on load
