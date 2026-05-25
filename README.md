@@ -247,7 +247,6 @@ python app.py
 ## Web Interface
 <img width="1262" height="903" alt="UI" src="https://github.com/user-attachments/assets/ce65f6ac-cbdc-41fa-9076-168a43397ab4" />
 <img width="1893" height="903" alt="prediction_example" src="https://github.com/user-attachments/assets/de95bfea-c038-475c-91c8-11e895d3f0e2" />
-<img width="978" height="871" alt="Screenshot 2026-05-21 142007" src="https://github.com/user-attachments/assets/ed60fa0e-8952-445f-9bdb-d642ed0ce4d4" />
 
 
 ## Initial Decision Boundary
