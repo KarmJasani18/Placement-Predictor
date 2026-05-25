@@ -247,7 +247,7 @@ python app.py
 ## Web Interface
 <img width="1262" height="903" alt="UI" src="https://github.com/user-attachments/assets/ce65f6ac-cbdc-41fa-9076-168a43397ab4" />
 <img width="1893" height="903" alt="prediction_example" src="https://github.com/user-attachments/assets/de95bfea-c038-475c-91c8-11e895d3f0e2" />
-<img width="1899" height="904" alt="prediction_history" src="https://github.com/KarmJasani18/Placement-Predictor/blob/main/Images/Prediction_History.png?raw=true" />
+<img width="1899" height="904" alt="Prediction_History" src="https://github.com/user-attachments/assets/3b8f4f26-70a2-4628-bf5e-ce73ceccd3d5" />
 
 
 ## Initial Decision Boundary
