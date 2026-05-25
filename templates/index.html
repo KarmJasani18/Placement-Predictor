@@ -33,7 +33,7 @@
         <li><a href="#features">Features</a></li>
         <li><a href="#history">History</a></li>
       </ul>
-      
+
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -145,8 +145,8 @@
           <div class="input-wrap">
             <i class="fa-solid fa-brain input-icon"></i>
 
-            <input type="number" id="iq-input" name="iq"
-value="{{ iq if iq else '' }}" placeholder="e.g. 110" min="50" max="160" step="1" required />
+            <input type="number" id="iq-input" name="iq" value="{{ iq if iq else '' }}" placeholder="e.g. 110" min="50"
+              max="160" step="1" required />
 
             <div class="input-bar"></div>
           </div>
@@ -161,9 +161,8 @@ value="{{ iq if iq else '' }}" placeholder="e.g. 110" min="50" max="160" step="1
           <div class="input-wrap">
             <i class="fa-solid fa-star-half-stroke input-icon"></i>
 
-            <input type="number" id="cgpa-input" name="cgpa"
-value="{{ cgpa if cgpa else '' }}" placeholder="e.g. 8.2" min="0" max="10" step="0.01"
-              required />
+            <input type="number" id="cgpa-input" name="cgpa" value="{{ cgpa if cgpa else '' }}" placeholder="e.g. 8.2"
+              min="0" max="10" step="0.01" required />
 
             <div class="input-bar"></div>
           </div>
@@ -187,32 +186,32 @@ value="{{ cgpa if cgpa else '' }}" placeholder="e.g. 8.2" min="0" max="10" step=
       <!-- Result card -->
       <div class="glass-card result-card" id="result-section">
 
-    <div class="result-placeholder" id="result-placeholder">
-        <div class="placeholder-icon">
+        <div class="result-placeholder" id="result-placeholder">
+          <div class="placeholder-icon">
             <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+
+          <p>Your prediction will appear here</p>
         </div>
 
-        <p>Your prediction will appear here</p>
-    </div>
+        <div class="result-content" id="result-content" style="display:none;">
 
-    <div class="result-content" id="result-content" style="display:none;">
-
-        <h2 id="result-text" style="font-size:2rem; margin-bottom:20px;">
+          <h2 id="result-text" style="font-size:2rem; margin-bottom:20px;">
             Result
-        </h2>
+          </h2>
 
-        <p style="font-size:1.2rem;">
+          <p style="font-size:1.2rem;">
             Probability:
             <strong id="confidence-text">0%</strong>
-        </p>
+          </p>
 
-    </div>
+        </div>
 
-</div> <!-- closes result-card -->
+      </div> <!-- closes result-card -->
 
-</div> <!-- closes predictor-layout -->
+    </div> <!-- closes predictor-layout -->
 
-</form> <!-- closes prediction-form -->
+  </form> <!-- closes prediction-form -->
 
   <!-- ── Prediction History ──────────────────────────────────────────────────── -->
   <section class="history-section" id="history">
@@ -268,45 +267,46 @@ value="{{ cgpa if cgpa else '' }}" placeholder="e.g. 8.2" min="0" max="10" step=
   </footer>
   <script>
 
-document.getElementById("prediction-form").addEventListener("submit", async function(e){
+    document.getElementById("prediction-form").addEventListener("submit", async function (e) {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    const iq = document.getElementById("iq-input").value;
-    const cgpa = document.getElementById("cgpa-input").value;
+      const iq = document.getElementById("iq-input").value;
+      const cgpa = document.getElementById("cgpa-input").value;
 
-    const response = await fetch("/predict", {
+      const response = await fetch("/predict", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            iq: iq,
-            cgpa: cgpa
+          iq: iq,
+          cgpa: cgpa
         })
-    });
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    document.querySelector(".result-placeholder").style.display = "none";
+      document.querySelector(".result-placeholder").style.display = "none";
 
-    document.querySelector(".result-content").style.display = "block";
+      document.querySelector(".result-content").style.display = "block";
 
-    document.getElementById("result-text").innerText = data.result;
+      document.getElementById("result-text").innerText = data.result;
 
-    document.getElementById("confidence-text").innerText =
+      document.getElementById("confidence-text").innerText =
         data.confidence + "%";
 
-    savePrediction(
+      savePrediction(
         data.iq,
         data.cgpa,
         data.result,
         data.confidence
-    );
+      );
 
-});
+    });
 
-</script>
+  </script>
 </body>
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
 </html>
