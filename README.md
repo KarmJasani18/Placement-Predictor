@@ -115,7 +115,7 @@ Changes made:
 - Improved overall decision boundary realism
 
 After improvements:
-- Accuracy dropped from ~88% → ~76%
+- Accuracy dropped from ~88% → ~83%
 - But predictions became significantly more realistic and believable
 
 This taught me that:
@@ -203,13 +203,15 @@ Possible future parameters:
 Placement-Predictor/
 │
 ├── app.py
-├── model.pkl
 ├── requirements.txt
 ├── README.md
 │
 ├── templates/
 │   └── index.html
 │
+├── Model/
+│   ├── model.pkl
+|
 ├── static/
 │   ├── style.css
 │   └── app.js
